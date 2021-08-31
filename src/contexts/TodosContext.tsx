@@ -15,11 +15,13 @@ type State = {
 enum ActionTypes {
   SET_TODOS = "SET_TODOS",
   TOGGLE_COMPLETED = "TOGGLE_COMPLETED",
+  DELETE = "DELETE",
 }
 
 type Action =
   | { type: ActionTypes.SET_TODOS; todos: ITodo[] }
-  | { type: ActionTypes.TOGGLE_COMPLETED; todo: ITodo };
+  | { type: ActionTypes.TOGGLE_COMPLETED; todo: ITodo }
+  | { type: ActionTypes.DELETE; todo: ITodo };
 
 const initialState = { todos: [] };
 
@@ -31,19 +33,21 @@ const TodosContext = createContext<{
 const { Provider } = TodosContext;
 
 const reducer = (state: State, action: Action): State => {
+  let todos: ITodo[];
   switch (action.type) {
     case ActionTypes.SET_TODOS:
       return { todos: action.todos };
     case ActionTypes.TOGGLE_COMPLETED:
-      const newState = {
-        todos: state.todos.map((todo) => {
-          if (todo.id === action.todo.id) {
-            return { ...todo, completed: !todo.completed };
-          }
-          return todo;
-        }),
-      };
-      return newState;
+      todos = state.todos.map((todo) => {
+        if (todo.id === action.todo.id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      });
+      return { todos };
+    case ActionTypes.DELETE:
+      todos = state.todos.filter((todo) => todo.id !== action.todo.id);
+      return { todos };
     default:
       throw new Error(`TodosContext: Action not found`);
   }
