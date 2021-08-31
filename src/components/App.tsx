@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TodosProvider } from "../contexts/TodosContext";
 import CreateTodo from "./Todo/CreateTodo";
 import ListTodo from "./Todo/ListTodo";
