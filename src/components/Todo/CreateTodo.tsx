@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ActionTypes, ITodo, TodosContext } from "../../contexts/TodosContext";
 
@@ -10,7 +11,7 @@ const CreateTodo = (): JSX.Element => {
     setText(e.target.value);
   };
 
-  const onKeyPress = (e: React.KeyboardEvent) => {
+  const onKeyPress = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && text && text.trim() !== "") {
       const todo: ITodo = {
         id: new Date().getTime(),
@@ -20,6 +21,13 @@ const CreateTodo = (): JSX.Element => {
       };
       dispatch({ type: ActionTypes.ADD, todo });
       setText("");
+      const response = await axios.post(
+        "https://jsonplaceholder.typicode.com/todos",
+        todo
+      );
+      if (response.status !== 201) {
+        console.log("Error creating Todo:", response);
+      }
     }
   };
 
