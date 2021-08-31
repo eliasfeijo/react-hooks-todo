@@ -39,6 +39,10 @@ const ListTodo = (): JSX.Element => {
     dispatch({ type: ActionTypes.TOGGLE_COMPLETED, todo });
   };
 
+  const onClickRemove = (todo: ITodo) => {
+    dispatch({ type: ActionTypes.DELETE, todo });
+  };
+
   const todos = state.todos.map((todo) => {
     return (
       <div
@@ -57,7 +61,10 @@ const ListTodo = (): JSX.Element => {
         >
           {todo.title}
         </p>
-        <div className="cursor-pointer text-red-500">
+        <div
+          className="cursor-pointer text-red-500"
+          onClick={() => onClickRemove(todo)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
