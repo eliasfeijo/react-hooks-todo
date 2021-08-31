@@ -30,8 +30,15 @@ const ListTodo = (): JSX.Element => {
     }
   };
 
-  const onClickRemove = (todo: ITodo) => {
+  const onClickRemove = async (todo: ITodo) => {
     dispatch({ type: ActionTypes.DELETE, todo });
+    const response = await axios.delete(
+      `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
+      {}
+    );
+    if (response.status !== 200) {
+      console.log("Error deleting Todo:", response);
+    }
   };
 
   const todos = state.todos.map((todo) => {
