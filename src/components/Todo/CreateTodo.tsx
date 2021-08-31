@@ -32,7 +32,7 @@ const CreateTodo = (): JSX.Element => {
   };
 
   return (
-    <div className="pt-4">
+    <div>
       <h3 className="text-xl text-center">New Todo</h3>
       <div className="flex justify-center pt-4">
         <input
