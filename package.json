@@ -1,0 +1,9 @@
+{
+  "name": "react-hooks-todo",
+  "version": "0.0.1",
+  "description": "Todo Application using React hooks",
+  "main": "src/index.js",
+  "author": "Elias Feijó",
+  "license": "MIT",
+  "private": true
+}
