@@ -16,6 +16,14 @@ const config: Configuration = {
   module: {
     rules: [
       {
+        test: /\.css$/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          "postcss-loader",
+        ],
+      },
+      {
         test: /\.(ts|js)x?$/i,
         exclude: /node_modules/,
         use: {
