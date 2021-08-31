@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { ActionTypes, TodosContext } from "../../contexts/TodosContext";
+import { ActionTypes, ITodo, TodosContext } from "../../contexts/TodosContext";
 
 const list = [
   {
@@ -35,13 +35,21 @@ const ListTodo = (): JSX.Element => {
     dispatch({ type: ActionTypes.SET_TODOS, todos: list });
   }, [dispatch]);
 
+  const onChangeCompleted = (todo: ITodo) => {
+    dispatch({ type: ActionTypes.TOGGLE_COMPLETED, todo });
+  };
+
   const todos = state.todos.map((todo) => {
     return (
       <div
         key={todo.id}
         className="w-full md:w-3/4 xl:w-2/5 flex items-center justify-between space-x-4 bg-gray-200 py-2 px-2 rounded"
       >
-        <input type="checkbox" checked={todo.completed} />
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onChange={() => onChangeCompleted(todo)}
+        />
         <p
           className={
             "text-center break-all" + (todo.completed ? " line-through" : "")
