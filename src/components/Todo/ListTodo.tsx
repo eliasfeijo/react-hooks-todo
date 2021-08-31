@@ -13,8 +13,11 @@ const ListTodo = (): JSX.Element => {
       );
       dispatch({ type: ActionTypes.SET_TODOS, todos: response.data });
     };
-    fetchTodos();
-  }, [dispatch]);
+    if (state.todos.length === 0) {
+      console.log("aaa");
+      fetchTodos();
+    }
+  }, [dispatch, state.todos.length]);
 
   const onChangeCompleted = async (todo: ITodo) => {
     dispatch({ type: ActionTypes.TOGGLE_COMPLETED, todo });

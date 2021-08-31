@@ -5,6 +5,7 @@ import CreateTodo from "./Todo/CreateTodo";
 import ListTodo from "./Todo/ListTodo";
 import "./App.css";
 import Footer from "./Footer";
+import About from "./About";
 
 const App = (): JSX.Element => (
   <Router>
@@ -26,19 +27,17 @@ const App = (): JSX.Element => (
         </ul>
       </nav>
       <div className="pb-4 pt-4">
-        <Switch>
-          <Route path="/about">
-            <div>
-              <h3 className="text-xl text-center">About</h3>
-            </div>
-          </Route>
-          <Route path="/">
-            <TodosProvider>
+        <TodosProvider>
+          <Switch>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/">
               <CreateTodo />
               <ListTodo />
-            </TodosProvider>
-          </Route>
-        </Switch>
+            </Route>
+          </Switch>
+        </TodosProvider>
       </div>
       <div className="flex-1" />
       <Footer />
