@@ -16,8 +16,18 @@ const ListTodo = (): JSX.Element => {
     fetchTodos();
   }, [dispatch]);
 
-  const onChangeCompleted = (todo: ITodo) => {
+  const onChangeCompleted = async (todo: ITodo) => {
     dispatch({ type: ActionTypes.TOGGLE_COMPLETED, todo });
+    const response = await axios.put(
+      `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
+      {
+        ...todo,
+        completed: !todo.completed,
+      }
+    );
+    if (response.status !== 200) {
+      console.log("Error updating Todo:", response);
+    }
   };
 
   const onClickRemove = (todo: ITodo) => {
