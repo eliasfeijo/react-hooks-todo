@@ -14,9 +14,12 @@ type State = {
 
 enum ActionTypes {
   SET_TODOS = "SET_TODOS",
+  TOGGLE_COMPLETED = "TOGGLE_COMPLETED",
 }
 
-type Action = { type: ActionTypes.SET_TODOS; todos: ITodo[] };
+type Action =
+  | { type: ActionTypes.SET_TODOS; todos: ITodo[] }
+  | { type: ActionTypes.TOGGLE_COMPLETED; todo: ITodo };
 
 const initialState = { todos: [] };
 
@@ -27,17 +30,27 @@ const TodosContext = createContext<{
 
 const { Provider } = TodosContext;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type Props = {};
-
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionTypes.SET_TODOS:
       return { todos: action.todos };
+    case ActionTypes.TOGGLE_COMPLETED:
+      const newState = {
+        todos: state.todos.map((todo) => {
+          if (todo.id === action.todo.id) {
+            return { ...todo, completed: !todo.completed };
+          }
+          return todo;
+        }),
+      };
+      return newState;
     default:
-      throw new Error(`TodosContext: Action ${action.type} not found`);
+      throw new Error(`TodosContext: Action not found`);
   }
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Props = {};
 
 const TodosProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
