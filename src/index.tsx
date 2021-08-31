@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "tailwindcss/tailwind.css";
-
-const App = () => <h1>My React and TypeScript App!</h1>;
+import App from "./components/App";
 
 ReactDOM.render(
   <React.StrictMode>
