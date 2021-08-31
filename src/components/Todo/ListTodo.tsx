@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { ActionTypes, TodosContext } from "../../contexts/TodosContext";
+
+const list = [
+  {
+    userId: 1,
+    id: 1,
+    title: "delectus aut autem",
+    completed: false,
+  },
+  {
+    userId: 1,
+    id: 2,
+    title: "quis ut nam facilis et officia qui",
+    completed: false,
+  },
+  {
+    userId: 1,
+    id: 3,
+    title: "fugiat veniam minus",
+    completed: false,
+  },
+  {
+    userId: 1,
+    id: 4,
+    title: "et porro tempora",
+    completed: true,
+  },
+];
 
 const ListTodo = (): JSX.Element => {
-  const list = [
-    {
-      userId: 1,
-      id: 1,
-      title: "delectus aut autem",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 2,
-      title: "quis ut nam facilis et officia qui",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 3,
-      title: "fugiat veniam minus",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 4,
-      title: "et porro tempora",
-      completed: true,
-    },
-  ];
+  const { state, dispatch } = useContext(TodosContext);
 
-  const todos = list.map((todo) => {
+  useEffect(() => {
+    dispatch({ type: ActionTypes.SET_TODOS, todos: list });
+  }, [dispatch]);
+
+  const todos = state.todos.map((todo) => {
     return (
       <div
         key={todo.id}
