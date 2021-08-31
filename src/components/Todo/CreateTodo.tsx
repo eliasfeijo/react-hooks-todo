@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ActionTypes, ITodo, TodosContext } from "../../contexts/TodosContext";
 
 const CreateTodo = (): JSX.Element => {
+  const { dispatch } = useContext(TodosContext);
+
   const [text, setText] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -8,7 +11,14 @@ const CreateTodo = (): JSX.Element => {
   };
 
   const onKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && text && text.trim() !== "") {
+      const todo: ITodo = {
+        id: new Date().getTime(),
+        userId: 1,
+        title: text,
+        completed: false,
+      };
+      dispatch({ type: ActionTypes.ADD, todo });
       setText("");
     }
   };
